@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" class="init">
+		$(document).ready( function () {
+	    	$('#directory').DataTable( {
+			dom: '<"top"lf>rt<"bottom"Bpi><"clear">',
+			responsive: true,
+			"columnDefs": [
+				    { responsivePriority: 1, targets: 0 }
+				],
+	    		buttons: [
+            		'copy', 'csv', 'excel', 'pdf', 'print'
+        		]
+	    	} );
+		} );  
+	</script>
+{% endblock header %}
+
+
+{% block content %}
+
+	<h3> Welcome to the employee directory! </h3>
+	<p>See below for more info.</p>
+	<br>
+	<table id="directory" class="display responsive nowrap" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th data-priority="1">First</th>
+				<th data-priority="1">Last</th>
+				<th data-priority="2">ext.</th>
+				<th>Title</th>
+				<th>Dept.</th>
+				<th data-priority="4">Email</th>
+				<th data-priority="3">Photo</th>
+				<th data-priority="3">Location</th>
+				{% if current_user.is_authenticated %}
+				<th>Edit</th>
+				<th>Delete</th>
+				{% endif %}
+			</tr>	
+		</thead>
+
+		<tbody>
+			{% for emp in employees %}
+				<tr>
+					<td>{{ emp.firstName }}</td>
+					<td>{{ emp.lastName }}</td>
+					<td>{{ emp.extension }}</td>
+					<td>{{ emp.title }}</td>
+					<td>{{ emp.department }}</td>
+					<td><a href="{{ 'mailto:' + emp.email }}">{{ emp.email }}</a></td>
+					<td><a href="{{url_for('static', filename='emp_pictures/full/' + emp.picture)}}" target="_blank"><img src="{{url_for('static', filename='emp_pictures/' + emp.picture)}}"></a></td>
+
+					{% if emp.buildingLoc == 'None' %}
+						<td>{{ emp.building }}</td>
+					{% else %}
+						<td><a href="{{url_for('static', filename='emp_locations/' + emp.buildingLoc)}}" target="_blank">{{ emp.building }}</a></td>
+					{% endif %}
+
+					{% if current_user.is_authenticated %}
+					<td><a href="{{ url_for('editEmployee', emp=emp.id) }}">Edit</a></td>
+					<td><a href="{{ url_for('delEmployee', emp=emp.id) }}">Delete</a></td>
+					{% endif %}
+				</tr>	
+			{% endfor %}			
+		</tbody>
+	</table>
+	<br>
+	<h3>How to:</h3>
+	<li>
+		Use the search bar to dynamically filter the directory based on any column.
+	</li>
+	<li>
+		Use the buttons below the table to save/print the full directory in your selected order.  Search first to save/print a subset.
+	</li>
+	<li>
+		If an employee's location is blue, click the location to see their desk location in the building (marked with a green dot).
+	</li>
+	<li>
+		Click on an employee's photo to see the full-size photo.
+	</li>
+	<li>
+		Not familiar with a building's layout?  Click 'Maps' at the top of the page!
+	</li>
+	</br>
+	</br>
+	
+{% endblock content %}

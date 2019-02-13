@@ -1,0 +1,27 @@
+{
+	"BuildingImages": {
+		"Main": "Main.png",
+		"Building 2": "Building 2.png"
+	},
+
+	"BuildingForm": [
+		["Main", "Main"], 
+		["Building 2", "Building 2"] 
+	],
+
+	"DepartmentForm": [
+		["Accounting", "Accounting"],
+		["Conference Room", "Conference Room"],
+		["Customer Service", "Customer Service"],
+		["HR", "HR"],
+		["IT", "IT"],
+		["Legal", "Legal"],
+		["Manufacturing", "Manufacturing"],
+		["Marketing", "Marketing"],
+		["N/A", "N/A"],
+		["Office Administration", "Office Administration"],
+		["Operations", "Operations"],
+		["Other", "Other"]
+	]
+
+}

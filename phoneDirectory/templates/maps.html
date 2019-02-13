@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+	<h1>Building Maps</h1>
+	</br>
+	</br>
+	</br>
+	{% for building in buildingImages %}
+		<span class="form-group"> 
+			<a class="btn btn-outline-info" href="{{ url_for('static', filename='building_maps/' + buildingImages[building]) }}">{{ building }}</a>
+		</span>
+	{% endfor %}
+
+
+{% endblock content %}
