@@ -71,8 +71,8 @@
 					{% endif %}
 
 					{% if current_user.is_authenticated %}
-					<td><a href="{{ url_for('editEmployee', emp=emp.id) }}">Edit</a></td>
-					<td><a href="{{ url_for('delEmployee', emp=emp.id) }}">Delete</a></td>
+					<td><a href="{{ url_for('emp.editEmployee', emp=emp.id) }}">Edit</a></td>
+					<td><a href="{{ url_for('emp.delEmployee', emp=emp.id) }}">Delete</a></td>
 					{% endif %}
 				</tr>	
 			{% endfor %}			

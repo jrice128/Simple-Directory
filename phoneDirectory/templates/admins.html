@@ -42,7 +42,7 @@
 			{% for email in admin %}
 				<tr>
 					<td>{{ email }}</td>
-					<td><a href="{{ url_for('delAdmin', email=email) }}">Delete</a></td>
+					<td><a href="{{ url_for('auth.delAdmin', email=email) }}">Delete</a></td>
 				</tr>	
 			{% endfor %}			
 		</tbody>

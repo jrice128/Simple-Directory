@@ -15,3 +15,10 @@ login_manager = LoginManager(app)
 
 
 from phoneDirectory import routes
+from phoneDirectory.emp.routes import emp
+from phoneDirectory.auth.routes import auth
+from phoneDirectory.main.routes import main
+
+app.register_blueprint(emp)
+app.register_blueprint(auth)
+app.register_blueprint(main)

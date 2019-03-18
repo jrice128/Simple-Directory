@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, HiddenField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp, Optional
+from wtforms import StringField, SubmitField, BooleanField, SelectField, HiddenField
+from wtforms.validators import DataRequired, Length, Email, ValidationError, Regexp, Optional
 from phoneDirectory import app
 from phoneDirectory.models import Employee
 import json
@@ -13,20 +13,6 @@ with open(dataPath) as json_file:
     jsonData = json.load(json_file)
 buildings = [tuple(l) for l in jsonData['BuildingForm']]
 departments = [tuple(l) for l in jsonData['DepartmentForm']]
-
-
-class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Sign Up')
-
-
-class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
 
 
 class NewEmployeeForm(FlaskForm):
@@ -143,22 +129,4 @@ class LocationForm(FlaskForm):
 
 class DeleteForm(FlaskForm):
     confirm = SubmitField('Confirm Delete')
-    cancel = SubmitField('Cancel')
-
-
-class RegisterAdminForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Regexp(r'^[A-Za-z0-9./@_-]*$', flags=0, message=u'Invalid input.'),
-                                    Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Submit')
-    cancel = SubmitField('Cancel')
-
-
-class NewAdminForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Regexp(r'^[A-Za-z0-9./@_-]*$', flags=0, message=u'Invalid input.'),
-                                    Email()])
-    submit = SubmitField('Submit')
     cancel = SubmitField('Cancel')
