@@ -27,5 +27,7 @@ def create_app(config_class=Config):
         app.register_blueprint(auth)
         from phoneDirectory.main.routes import main
         app.register_blueprint(main)
+        from phoneDirectory.errors.handlers import errors
+        app.register_blueprint(errors)
 
     return app

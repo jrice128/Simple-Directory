@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>Oops, that page does not exist. (404)</h2>
+        <h5>Please check your address and try again.  If you believe this is an error, please click below to email the admins:</h5>
+        <br>
+        <br>
+        <h3>
+            <a href="mailto:{{ config.ADMIN_EMAIL }}?subject={{ errorCode }} Error&body={{ errorText }}">Email Admin</a>
+        </h3>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>Oops, there was an error with the directory.</h2>
+        <h4>Please click below to email the admins:</h4>
+        <br>
+        <h3>
+            <a href="mailto:{{ config.ADMIN_EMAIL }}?subject={{ errorCode }} Error&body={{ errorText }}">Email Admin</a>
+        </h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>
+            Error information:
+        </p>
+        <ul>
+            <li>Error: {{ errorCode }}</li>
+            <li>URL: {{ urlPath }}</li>
+            <li>Referrer: {{ urlRef }}</li>
+        </ul>
+    </div>
+
+{% endblock content %}
