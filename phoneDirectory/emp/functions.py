@@ -1,10 +1,10 @@
 import os
 import secrets
 from PIL import Image, ImageDraw
-from phoneDirectory import app
+from flask import current_app
 import json
 
-dataPath = os.path.join(app.root_path, 'static', 'data.json')
+dataPath = os.path.join(current_app.root_path, 'static', 'data.json')
 with open(dataPath) as json_file:
     jsonData = json.load(json_file)
 buildingImages = jsonData['BuildingImages']
@@ -13,8 +13,8 @@ buildingImages = jsonData['BuildingImages']
 def locOnImage(building, xLoc, yLoc):
     random_hex = secrets.token_hex(8)
     pictureFn = random_hex + '.png'
-    sourceImgPath = os.path.join(app.root_path, 'static', 'building_maps', buildingImages[building])
-    saveImgPath = os.path.join(app.root_path, 'static', 'emp_locations', pictureFn)
+    sourceImgPath = os.path.join(current_app.root_path, 'static', 'building_maps', buildingImages[building])
+    saveImgPath = os.path.join(current_app.root_path, 'static', 'emp_locations', pictureFn)
 
     image = Image.open(sourceImgPath)
     draw = ImageDraw.Draw(image)
@@ -28,8 +28,8 @@ def savePicture(formPicture):
     random_hex = secrets.token_hex(8)
     _, fExt = os.path.splitext(formPicture.filename)
     pictureFn = random_hex + fExt
-    picturePath = os.path.join(app.root_path, 'static', 'emp_pictures', pictureFn)
-    fullPicturePath = os.path.join(app.root_path, 'static', 'emp_pictures', 'full', pictureFn)
+    picturePath = os.path.join(current_app.root_path, 'static', 'emp_pictures', pictureFn)
+    fullPicturePath = os.path.join(current_app.root_path, 'static', 'emp_pictures', 'full', pictureFn)
     formPicture.save(fullPicturePath)
     outputSize = (100, 100)
     image = Image.open(formPicture)

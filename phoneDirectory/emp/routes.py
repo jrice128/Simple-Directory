@@ -1,6 +1,6 @@
 import os
-from flask import render_template, url_for, flash, redirect, request, Blueprint
-from phoneDirectory import app, db
+from flask import current_app, render_template, url_for, flash, redirect, request, Blueprint
+from phoneDirectory import db
 from phoneDirectory.emp.forms import NewEmployeeForm, EditEmployeeForm
 from phoneDirectory.emp.forms import LocationForm, DeleteForm
 from phoneDirectory.emp.functions import locOnImage, savePicture
@@ -61,14 +61,14 @@ def editEmployee():
 
         if form.resetPicture.data:
             if employee.picture != "defaultprofile.jpg":
-                os.remove(os.path.join(app.root_path, 'static', 'emp_pictures', employee.picture))
-                os.remove(os.path.join(app.root_path, 'static', 'emp_pictures', 'full', employee.picture))
+                os.remove(os.path.join(current_app.root_path, 'static', 'emp_pictures', employee.picture))
+                os.remove(os.path.join(current_app.root_path, 'static', 'emp_pictures', 'full', employee.picture))
             employee.picture = "defaultprofile.jpg"
         elif form.picture.data:
             if not isinstance(form.picture.data, str):
                 if employee.picture != "defaultprofile.jpg":
-                    os.remove(os.path.join(app.root_path, 'static', 'emp_pictures', employee.picture))
-                    os.remove(os.path.join(app.root_path, 'static', 'emp_pictures', 'full', employee.picture))
+                    os.remove(os.path.join(current_app.root_path, 'static', 'emp_pictures', employee.picture))
+                    os.remove(os.path.join(current_app.root_path, 'static', 'emp_pictures', 'full', employee.picture))
                 employee.picture = savePicture(form.picture.data)
         if form.resetLocation.data:
             employee.buildingLoc = 'None'
@@ -120,16 +120,16 @@ def empLocationConf():
     if form.validate_on_submit():
         if form.confirm.data:
             if employee.buildingLoc and employee.buildingLoc != 'None':
-                os.remove(os.path.join(app.root_path, 'static', 'emp_locations', employee.buildingLoc))
+                os.remove(os.path.join(current_app.root_path, 'static', 'emp_locations', employee.buildingLoc))
             employee.buildingLoc = buildingLoc
             db.session.commit()
             flash(f'Location saved for {employee.firstName} {employee.lastName}')
             return redirect(url_for('main.home'))
         elif form.redo.data:
-            os.remove(os.path.join(app.root_path, 'static', 'emp_locations', buildingLoc))
+            os.remove(os.path.join(current_app.root_path, 'static', 'emp_locations', buildingLoc))
             return redirect(url_for('emp.empLocation', emp=id))
         elif form.cancel.data:
-            os.remove(os.path.join(app.root_path,'static', 'emp_locations', buildingLoc))
+            os.remove(os.path.join(current_app.root_path,'static', 'emp_locations', buildingLoc))
             return redirect(url_for('main.home'))
     # buildingLoc = locOnImage(emp.building, xLoc, yLoc)
     return render_template('empLocationConf.html', title='Confirm Employee Building Location',
@@ -148,10 +148,10 @@ def delEmployee():
     if form.validate_on_submit():
         if form.confirm.data:
             if employee.buildingLoc and employee.buildingLoc != 'None':
-                os.remove(os.path.join(app.root_path, 'static', 'emp_locations', employee.buildingLoc))
+                os.remove(os.path.join(current_app.root_path, 'static', 'emp_locations', employee.buildingLoc))
             if employee.picture != "defaultprofile.jpg":
-                os.remove(os.path.join(app.root_path, 'static', 'emp_pictures', employee.picture))
-                os.remove(os.path.join(app.root_path, 'static', 'emp_pictures', 'full', employee.picture))
+                os.remove(os.path.join(current_app.root_path, 'static', 'emp_pictures', employee.picture))
+                os.remove(os.path.join(current_app.root_path, 'static', 'emp_pictures', 'full', employee.picture))
             db.session.delete(employee)
             db.session.commit()
             flash(f'Employee record deleted.', 'warning')

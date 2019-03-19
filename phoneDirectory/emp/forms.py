@@ -1,14 +1,14 @@
+from flask import current_app
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, BooleanField, SelectField, HiddenField
 from wtforms.validators import DataRequired, Length, Email, ValidationError, Regexp, Optional
-from phoneDirectory import app
 from phoneDirectory.models import Employee
 import json
 import os
 
 # JSON data import
-dataPath = os.path.join(app.root_path, 'static', 'data.json')
+dataPath = os.path.join(current_app.root_path, 'static', 'data.json')
 with open(dataPath) as json_file:
     jsonData = json.load(json_file)
 buildings = [tuple(l) for l in jsonData['BuildingForm']]
