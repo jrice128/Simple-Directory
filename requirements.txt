@@ -1,5 +1,5 @@
 bcrypt==3.1.4
-certifi==2018.11.29
+certifi==2019.3.9
 cffi==1.11.5
 Click==7.0
 Flask==1.0.2
@@ -8,7 +8,7 @@ Flask-Login==0.4.1
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.10.1
 MarkupSafe==1.1.0
 olefile==0.46
 Pillow==5.4.1

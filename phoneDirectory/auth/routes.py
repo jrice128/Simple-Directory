@@ -77,7 +77,8 @@ def addAdmin():
         db.session.add(admin)
         db.session.commit()
         flash(
-            f'Administrator account for {admin.email} created. Please go to phone.yourcompany.com/register to finalize account.')
+            f'Administrator account for {admin.email} created. '
+            f'Please go to phone.yourcompany.com/register to finalize account.')
         return redirect(url_for('main.home'))
     return render_template('addAdmin.html', title='Add Administrator', form=form)
 
