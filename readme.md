@@ -8,4 +8,3 @@ Simple Directory is a lightweight employee phone and location directory applicat
 - Multiple locations and emails per employee
 - HTTPS implementation
 - Employee/user access through login
-- Customized error pages and handling
